@@ -1,29 +1,29 @@
-let currentOperand = '';
-let previousOperand = '';
-let operation = undefined;
+let currentOperand = ''; //Первый операнд (текущий)
+let previousOperand = ''; //Второй операнд (предыдущий)
+let operation = undefined; //Оператор
 
 function number(number) {
-    if (number === '0' && currentOperand === '0') return;
-    currentOperand = currentOperand.toString() + number.toString();
+    if (number === '0' && currentOperand === '0') return; //проверка 2-х нулей подряд
+    currentOperand = currentOperand.toString() + number.toString(); //преобразование в строку и конкатенация в currentOperand
     updateDisplay();
 }
 
 function chooseOperation(op) {
-    if (currentOperand === '') return;
+    if (currentOperand === '') return; //Проверка на наличие значения
     if (previousOperand !== '') {
         compute();
     }
-    operation = op;
-    previousOperand = currentOperand;
-    currentOperand = '';
+    operation = op; //запись значения аргумента функции chooseOperation в переменную
+    previousOperand = currentOperand; //Из текущего записываем в предыдущий
+    currentOperand = ''; //сбрасываем значение
     updateDisplay();
 }
 
 function compute() {
     let result;
-    const prev = parseFloat(previousOperand);
-    const current = parseFloat(currentOperand);
-    if (isNaN(prev) || isNaN(current)) return;
+    const prev = parseFloat(previousOperand); //Засовываем в константу и преобразовываем в число с плавающей точкой
+    const current = parseFloat(currentOperand); //Аналогично предыдущей строке
+    if (isNaN(prev) || isNaN(current)) return; //Проверка "является ли числом"
     switch (operation) {
         case '+':
             result = prev + current;
@@ -36,7 +36,7 @@ function compute() {
             break;
         case '/':
             if (current === 0) {
-                alert("Division by zero is not allowed!");
+                alert("Делить на ноль нельзя");
                 clearDisplay();
                 return;
             }
@@ -45,12 +45,13 @@ function compute() {
         default:
             return;
     }
-    currentOperand = result;
+    currentOperand = result; //записываем результат, например, чтобы провести операцию прошлого результата со следующим числом
     operation = undefined;
-    previousOperand = '';
+    previousOperand = ''; 
     updateDisplay();
 }
 
+//Очищаем display 
 function clearDisplay() {
     currentOperand = '';
     previousOperand = '';
@@ -58,6 +59,7 @@ function clearDisplay() {
     updateDisplay();
 }
 
+//интерактивно обновляем на display информацию
 function updateDisplay() {
     const display = document.getElementById('display');
     display.innerText = currentOperand || previousOperand || '0';
