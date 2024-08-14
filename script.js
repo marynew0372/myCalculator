@@ -64,3 +64,29 @@ function updateDisplay() {
     const display = document.getElementById('display');
     display.innerText = currentOperand || previousOperand || '0';
 }
+
+
+document.addEventListener('keydown', function(event) {
+    const key = event.key; // Получаем нажатую клавишу
+
+    // Проверяем, нажата ли цифра
+    if (!isNaN(key)) {
+        number(key);
+    }
+
+    // Проверяем, нажата ли одна из операций
+    if (key === '+' || key === '-' || key === '*' || key === '/') {
+        chooseOperation(key);
+    }
+
+    // Проверяем, нажата ли клавиша Enter (для выполнения вычислений)
+    if (key === 'Enter') {
+        compute();
+    }
+
+    // Проверяем, нажата ли клавиша Escape или Backspace для сброса
+    if (key === 'Escape' || key === 'Backspace') {
+        clearDisplay();
+    }
+});
+
